@@ -21,6 +21,12 @@ class MyConstant {
   static Color primary4 = Color.fromARGB(255, 215, 192, 239);
 
   //Style
+  TextStyle headStyle() => TextStyle(
+    fontSize:40,
+    color: primary3,
+    fontWeight: FontWeight.bold,
+    
+  );
   TextStyle h1Style() => TextStyle(
     fontSize: 24,
     color: primary1,
