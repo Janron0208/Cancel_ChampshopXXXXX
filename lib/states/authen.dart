@@ -39,10 +39,9 @@ class _AuthenState extends State<Authen> {
 
   Padding buildTextUser() {
     return Padding(
-              padding: const EdgeInsets.only(left: 50),
-              child: ShowTitle(
-                  title: 'เข้าสู่ระบบ', textStyle: MyConstant().h1Style()),
-            );
+      padding: const EdgeInsets.only(left: 50),
+      child: ShowTitle(title: 'เข้าสู่ระบบ', textStyle: MyConstant().h1Style()),
+    );
   }
 
   TextButton buildCreateAccount() => TextButton(

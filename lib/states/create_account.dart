@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:champshop/utility/my_constant.dart';
+import 'package:champshop/utility/my_dialog.dart';
 import 'package:champshop/widgets/show_image.dart';
 import 'package:champshop/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,9 +17,17 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  String? typeUser;
+  // String? typeUser;
+  final String typeUser = 'buyer';
+  String avatar = '';
   File? file;
   final formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   Row buildName(double size) {
     return Row(
@@ -26,6 +37,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 8),
           width: size * 0.8,
           child: TextFormField(
+            controller: nameController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอกชื่อ-นามสกุลให้เรียบร้อย';
@@ -53,6 +65,83 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
+  Row buildAddress(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 8),
+          width: size * 0.8,
+          child: TextFormField(
+            controller: addressController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกที่อยู่ให้เรียบร้อย';
+              } else {}
+            },
+            maxLines: 3,
+            decoration: InputDecoration(
+              hintStyle: MyConstant().h3Style(),
+              // labelText: 'ที่อยู่',
+              hintText: 'ที่อยู่',
+              prefixIcon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 60),
+                child: Icon(
+                  Icons.home,
+                  color: MyConstant.primary4,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildEmail(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 8),
+          width: size * 0.8,
+          child: TextFormField(
+            controller: emailController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกอีเมล์ให้เรียบร้อย';
+              } else {}
+            },
+            decoration: InputDecoration(
+              labelStyle: MyConstant().h3Style(),
+              labelText: 'อีเมล์',
+              prefixIcon: Icon(
+                Icons.mail,
+                color: MyConstant.primary4,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Row buildPhone(double size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -61,6 +150,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 8),
           width: size * 0.8,
           child: TextFormField(
+            controller: phoneController,
             keyboardType: TextInputType.phone,
             validator: (value) {
               if (value!.isEmpty) {
@@ -89,76 +179,6 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  Row buildPassword(double size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 8),
-          width: size * 0.8,
-          child: TextFormField(
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'กรุณากรอกรหัสผ่านให้เรียบร้อย';
-              } else {}
-            },
-            decoration: InputDecoration(
-              labelStyle: MyConstant().h3Style(),
-              labelText: 'รหัสผ่าน',
-              prefixIcon: Icon(
-                Icons.key,
-                color: MyConstant.primary4,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary4),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary4),
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row buildEmail(double size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 8),
-          width: size * 0.8,
-          child: TextFormField(
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'กรุณากรอกอีเมล์ให้เรียบร้อย';
-              } else {}
-            },
-            decoration: InputDecoration(
-              labelStyle: MyConstant().h3Style(),
-              labelText: 'อีเมล์',
-              prefixIcon: Icon(
-                Icons.mail,
-                color: MyConstant.primary4,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary4),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary4),
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Row buildUser(double size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -167,6 +187,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 8),
           width: size * 0.8,
           child: TextFormField(
+            controller: userController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณาชื่อบัญชีผู้ใช้ให้เรียบร้อย';
@@ -194,7 +215,7 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  Row buildAddress(double size) {
+  Row buildPassword(double size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -202,22 +223,18 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 8),
           width: size * 0.8,
           child: TextFormField(
+            controller: passwordController,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'กรุณากรอกที่อยู่ให้เรียบร้อย';
+                return 'กรุณากรอกรหัสผ่านให้เรียบร้อย';
               } else {}
             },
-            maxLines: 3,
             decoration: InputDecoration(
-              hintStyle: MyConstant().h3Style(),
-              // labelText: 'ที่อยู่',
-              hintText: 'ที่อยู่',
-              prefixIcon: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 60),
-                child: Icon(
-                  Icons.home,
-                  color: MyConstant.primary4,
-                ),
+              labelStyle: MyConstant().h3Style(),
+              labelText: 'รหัสผ่าน',
+              prefixIcon: Icon(
+                Icons.key,
+                color: MyConstant.primary4,
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: MyConstant.primary4),
@@ -289,7 +306,7 @@ class _CreateAccountState extends State<CreateAccount> {
           buildCreateNewAccount(),
         ],
         title: Text('สมัครสมาชิก'),
-        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        backgroundColor: Color.fromARGB(49, 87, 204, 63),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
@@ -318,31 +335,106 @@ class _CreateAccountState extends State<CreateAccount> {
 
   IconButton buildCreateNewAccount() {
     return IconButton(
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              if (typeUser == null) {
-                print('object');
-              } else {
-                print('object');
-              }
-            }
-          },
-          icon: Icon(Icons.cloud_upload),
-        );
-  }
-
-  RadioListTile<String> buildRadioBuyer() {
-    return RadioListTile(
-      value: 'buyer',
-      groupValue: typeUser,
-      onChanged: (value) {
-        setState(() {
-          typeUser = value as String?;
-        });
+      onPressed: () {
+        if (formKey.currentState!.validate()) {
+          if (typeUser == null) {
+            print('Non Choose Type User');
+          } else {
+            print('Process Insert to Database');
+            uploadPictureAndInsertData();
+          }
+        }
       },
-      title: ShowTitle(title: 'ลูกค้า', textStyle: MyConstant().h3Style()),
+      icon: Icon(Icons.cloud_upload),
     );
   }
+
+  Future<Null> uploadPictureAndInsertData() async {
+    String name = nameController.text;
+    String address = addressController.text;
+    String email = emailController.text;
+    String phone = phoneController.text;
+    String user = userController.text;
+    String password = passwordController.text;
+    print(
+        '##name = $name,address = $address,email = $email,phone = $phone,user = $user,password = $password');
+    String path =
+        '${MyConstant.domain}/champshop/getUserWhereUser.php?isAdd=true&user=$user';
+    await Dio().get(path).then((value) async {
+      print('## value ===>> $value');
+      if (value.toString() == 'null') {
+        print('## user OK');
+
+        if (file == null) {
+          // no avatar
+          processInsertMySQL(
+              name: name,
+              address: address,
+              email: email,
+              phone: phone,
+              user: user,
+              password: password);
+        } else {
+          // have avatar
+          print('### process Upload Avatar');
+          String apiSaveAvatar =
+              '${MyConstant.domain}/champshop/saveAvatar.php';
+          int i = Random().nextInt(100000);
+          String nameAvatar = 'avatar$i.jpg';
+          Map<String, dynamic> map = Map();
+          map['file'] =
+              await MultipartFile.fromFile(file!.path, filename: nameAvatar);
+          FormData data = FormData.fromMap(map);
+          await Dio().post(apiSaveAvatar, data: data).then((value) {
+            avatar = '/champshop/avatar/$nameAvatar';
+            processInsertMySQL(
+                name: name,
+                address: address,
+                email: email,
+                phone: phone,
+                user: user,
+                password: password);
+          });
+        }
+      } else {
+        MyDialog().normalDialog(context, 'ผิดพลาด !', 'กรุณาใช้ชื่อผู้ใช้ใหม่');
+      }
+    });
+  }
+
+  Future<Null> processInsertMySQL(
+      {String? name,
+      String? address,
+      String? email,
+      String? phone,
+      String? user,
+      String? password}) async {
+    print('### processInsertMySQL Work and avatar ==>> $avatar');
+    String apiInsertUser =
+        '${MyConstant.domain}/champshop/insertUser.php?isAdd=true&name=$name&type=$typeUser&email=$email&address=$address&phone=$phone&user=$user&password=$password&avatar=$avatar';
+    await Dio().get(apiInsertUser).then((value) {
+      if (value.toString() == 'true') {
+        Navigator.pop(context);
+      } else {
+        MyDialog()
+            .normalDialog(context, 'การสมัครสมาชิกผิดพลาด!', 'โปรดลองอีกครั้ง');
+      }
+    });
+  }
+
+  // RadioListTile<String> buildRadioBuyer() {
+  //   return RadioListTile(
+  //     value: 'buyer',
+  //     groupValue: typeUser,
+  //     onChanged: (value) {
+  //       setState(() {
+  //         typeUser = value as String?;
+  //         typeUser = 'ลูกค้า';
+  //       });
+  //     },
+  //     title: ShowTitle(title: 'ลูกค้า', textStyle: MyConstant().h3Style()),
+  //   );
+  // }
 
   Container buildTitle(String title) {
     return Container(

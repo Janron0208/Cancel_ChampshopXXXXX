@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       initialRoute: initlalRount,
       theme: ThemeData(
         fontFamily: 'Prompt',
-        
+        scaffoldBackgroundColor:  Color.fromARGB(255, 247, 240, 225),
       ),
     );
   }

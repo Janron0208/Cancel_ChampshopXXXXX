@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class MyConstant {
   //General
   static String appName = 'ChampShop';
+  static String domain =
+      'https://a84c-2403-6200-88a0-7110-ccd0-287d-ccb7-6455.ap.ngrok.io';
 
   //Route
   static String routeAuthen = '/authen';
@@ -12,6 +14,7 @@ class MyConstant {
 
   //Image
   static String image1 = 'images/image1.png';
+  static String image2 = 'images/image2.png';
   static String avatar = 'images/avatar.png';
 
   //color
@@ -19,6 +22,8 @@ class MyConstant {
   static Color primary2 = Color(0xff42855B);
   static Color primary3 = Color(0xff90B77D);
   static Color primary4 = Color(0xffD2D79F);
+  static Color error1 = Color.fromARGB(255, 255, 108, 108);
+  static Color error2 = Color.fromARGB(255, 255, 143, 143);
 
   //Style
   TextStyle headStyle() => TextStyle(
@@ -39,6 +44,16 @@ class MyConstant {
   TextStyle h3Style() => TextStyle(
         fontSize: 14,
         color: primary3,
+        fontWeight: FontWeight.normal,
+      );
+  TextStyle error1Style() => TextStyle(
+        fontSize: 18,
+        color: error1,
+        fontWeight: FontWeight.normal,
+      );
+      TextStyle error2Style() => TextStyle(
+        fontSize: 14,
+        color: error2,
         fontWeight: FontWeight.normal,
       );
 
