@@ -6,15 +6,15 @@ import 'package:champshop/states/create_account.dart';
 import 'package:champshop/states/saler_service.dart';
 
 final Map<String, WidgetBuilder> map = {
-  '/authen':(BuildContext context)=>Authen(),
-  '/createAccount':(BuildContext context)=>CreateAccount(),
-  'buyerService':(BuildContext context)=>BuyerService(),
-  'salerService':(BuildContext context)=>SalerService(),
+  '/authen': (BuildContext context) => Authen(),
+  '/createAccount': (BuildContext context) => CreateAccount(),
+  '/buyerService': (BuildContext context) => BuyerService(),
+  '/salerService': (BuildContext context) => SalerService(),
 };
 
 String? initlalRount;
 
-void main(){
+void main() {
   initlalRount = MyConstant.routeAuthen;
   runApp(MyApp());
 }
@@ -28,6 +28,10 @@ class MyApp extends StatelessWidget {
       title: MyConstant.appName,
       routes: map,
       initialRoute: initlalRount,
+      theme: ThemeData(
+        fontFamily: 'Prompt',
+        
+      ),
     );
   }
 }

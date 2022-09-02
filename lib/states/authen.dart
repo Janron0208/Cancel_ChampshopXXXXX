@@ -25,12 +25,51 @@ class _AuthenState extends State<Authen> {
             children: [
               buildImage(size),
               buildAppName(),
+              buildTextUser(),
               buildUser(size),
               buildPassword(size),
+              buildLogin(size),
+              buildCreateAccount(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Padding buildTextUser() {
+    return Padding(
+              padding: const EdgeInsets.only(left: 50),
+              child: ShowTitle(
+                  title: 'เข้าสู่ระบบ', textStyle: MyConstant().h1Style()),
+            );
+  }
+
+  TextButton buildCreateAccount() => TextButton(
+        onPressed: () =>
+            Navigator.pushNamed(context, MyConstant.routeCreateAccount),
+        style: TextButton.styleFrom(
+          primary: MyConstant.primary2,
+        ),
+        child: Text('สมัครสมาชิก'),
+      );
+
+  Row buildLogin(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          // margin: EdgeInsets.symmetric(vertical: 20),
+          margin: EdgeInsets.only(top: 25, bottom: 8),
+          width: size * 0.8,
+          height: size * 0.129,
+          child: ElevatedButton(
+            style: MyConstant().myButtonStyle(),
+            onPressed: () {},
+            child: Text('เข้าสู่ระบบ'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -39,22 +78,22 @@ class _AuthenState extends State<Authen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 16),
-          width: size * 0.7,
+          margin: EdgeInsets.only(top: 8),
+          width: size * 0.8,
           child: TextFormField(
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Style(),
-              labelText: 'กรุณากรอกชื่อผู้ใช้',
+              labelText: 'ชื่อบัญชีผู้ใช้',
               suffixIcon: Icon(
                 Icons.person_outline,
-                color: MyConstant.primary2,
+                color: MyConstant.primary4,
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary2),
+                borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(35),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary3),
+                borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(35),
               ),
             ),
@@ -70,7 +109,7 @@ class _AuthenState extends State<Authen> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 16),
-          width: size * 0.7,
+          width: size * 0.8,
           child: TextFormField(
             obscureText: statusRedEye,
             decoration: InputDecoration(
@@ -83,26 +122,26 @@ class _AuthenState extends State<Authen> {
                 icon: statusRedEye
                     ? Icon(
                         Icons.remove_red_eye,
-                        color: MyConstant.primary2,
+                        color: MyConstant.primary4,
                       )
                     : Icon(
                         Icons.remove_red_eye_outlined,
-                        color: MyConstant.primary2,
+                        color: MyConstant.primary4,
                       ),
               ),
 
               labelStyle: MyConstant().h3Style(),
-              labelText: 'กรุณากรอกรหัสผ่าน',
+              labelText: 'รหัสผ่าน',
               // suffixIcon: Icon(
               //   Icons.lock_outline,
               //   color: MyConstant.primary2,
               // ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary2),
+                borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(35),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyConstant.primary3),
+                borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(35),
               ),
             ),
@@ -116,12 +155,18 @@ class _AuthenState extends State<Authen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Column(
-          children: [
-            ShowTitle(
-                title: MyConstant.appName, textStyle: MyConstant().headStyle()),
-            ShowTitle(title: "ร้านขายอุปกรณ์ก่อสร้าง", textStyle: MyConstant().h2Style())
-          ],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            children: [
+              ShowTitle(
+                  title: MyConstant.appName,
+                  textStyle: MyConstant().headStyle()),
+              ShowTitle(
+                  title: "ร้านจำหน่ายอุปกรณ์ก่อสร้าง",
+                  textStyle: MyConstant().h3Style())
+            ],
+          ),
         ),
       ],
     );
