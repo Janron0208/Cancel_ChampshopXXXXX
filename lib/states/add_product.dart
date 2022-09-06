@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utility/my_constant.dart';
 import '../widgets/show_image.dart';
@@ -23,6 +24,10 @@ class _AddProductState extends State<AddProduct> {
   final formKey = GlobalKey<FormState>();
   List<File?> files = [];
   File? file;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController detailController = TextEditingController();
+  List<String> paths = [];
 
   @override
   void initState() {
@@ -34,6 +39,7 @@ class _AddProductState extends State<AddProduct> {
   void initialFile() {
     for (var i = 0; i < 4; i++) {
       files.add(null);
+      
     }
   }
 
@@ -109,14 +115,35 @@ class _AddProductState extends State<AddProduct> {
         for (var item in files) {
           int i = Random().nextInt(1000000);
           String nameFile = 'product$i.jpg';
+
+          paths.add('/product/$nameFile');
+
           Map<String, dynamic> map = {};
           map['file'] =
               await MultipartFile.fromFile(item!.path, filename: nameFile);
           FormData data = FormData.fromMap(map);
-          await Dio().post(apiSaveProduct, data: data).then((value) {
+          await Dio().post(apiSaveProduct, data: data).then((value) async {
             print('Upload Success');
             loop++;
             if (loop >= files.length) {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+
+                  String idSeller = preferences.getString('id')!;
+                  String nameSeller = preferences.getString('name')!;
+                  String name = nameController.text;
+                  String price = priceController.text;
+                  String detail = detailController.text;
+                  String images = paths.toString();
+                  
+                  print('### idSeller = $idSeller , nameSeller = $nameSeller');
+                  print('### name = $name, price = $price, detail = $detail');
+                  print('### image ==>> $images');
+
+                  String path = '${MyConstant.domain}/champshop/insertProduct.php?isAdd=true&idSeller=$idSeller&nameSeller=$nameSeller&name=$name&price=$price&detail=$detail&images=$images';
+
+                  await Dio().get(path).then((value) => Navigator.pop(context));
+
               Navigator.pop(context);
             }
           });
@@ -255,7 +282,7 @@ class _AddProductState extends State<AddProduct> {
     return Container(
       width: constraints.maxWidth * 0.8,
       margin: EdgeInsets.only(top: 8),
-      child: TextFormField(
+      child: TextFormField(controller: nameController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'กรุณากรอกชื่อสินค้า';
@@ -291,7 +318,7 @@ class _AddProductState extends State<AddProduct> {
     return Container(
       width: constraints.maxWidth * 0.8,
       margin: EdgeInsets.only(top: 8),
-      child: TextFormField(
+      child: TextFormField(controller: priceController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'กรุณากรอกราคา';
@@ -328,7 +355,7 @@ class _AddProductState extends State<AddProduct> {
     return Container(
       width: constraints.maxWidth * 0.8,
       margin: EdgeInsets.only(top: 8),
-      child: TextFormField(
+      child: TextFormField(controller: detailController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'กรุณากรอกรายละเอียด';
