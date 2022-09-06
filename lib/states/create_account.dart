@@ -58,6 +58,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(20),
               ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
           ),
         ),
@@ -99,6 +107,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(20),
               ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
           ),
         ),
@@ -132,6 +148,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 borderRadius: BorderRadius.circular(20),
               ),
               focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -172,6 +196,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(20),
               ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
           ),
         ),
@@ -208,6 +240,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(20),
               ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
           ),
         ),
@@ -241,6 +281,14 @@ class _CreateAccountState extends State<CreateAccount> {
                 borderRadius: BorderRadius.circular(20),
               ),
               focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.primary4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -284,6 +332,27 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
+  Row buildRegister(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          // margin: EdgeInsets.symmetric(vertical: 20),
+          margin: EdgeInsets.only(top: 35, bottom: 40),
+          width: size * 0.8,
+          height: size * 0.129,
+          child: ElevatedButton(
+            style: MyConstant().myButtonStyle(),
+            onPressed: () {
+              buildCreateNewAccount();
+            },
+            child: Text('สมัครสมาชิก'),
+          ),
+        ),
+      ],
+    );
+  }
+
   Future<Null> chooseImage(ImageSource source) async {
     try {
       var result = await ImagePicker().getImage(
@@ -303,7 +372,7 @@ class _CreateAccountState extends State<CreateAccount> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          buildCreateNewAccount(),
+          // buildCreateNewAccount(),
         ],
         title: Text('สมัครสมาชิก'),
         backgroundColor: Color.fromARGB(49, 87, 204, 63),
@@ -325,6 +394,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 buildPhone(size),
                 buildUser(size),
                 buildPassword(size),
+                buildRegister(size),
               ],
             ),
           ),
@@ -333,10 +403,8 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  IconButton buildCreateNewAccount() {
-    return IconButton(
-      onPressed: () {
-        if (formKey.currentState!.validate()) {
+  void buildCreateNewAccount(){
+    if (formKey.currentState!.validate()) {
           if (typeUser == null) {
             print('Non Choose Type User');
           } else {
@@ -344,10 +412,23 @@ class _CreateAccountState extends State<CreateAccount> {
             uploadPictureAndInsertData();
           }
         }
-      },
-      icon: Icon(Icons.cloud_upload),
-    );
   }
+
+  // IconButton buildCreateNewAccount() {
+  //   return IconButton(
+  //     onPressed: () {
+  //       if (formKey.currentState!.validate()) {
+  //         if (typeUser == null) {
+  //           print('Non Choose Type User');
+  //         } else {
+  //           print('Process Insert to Database');
+  //           uploadPictureAndInsertData();
+  //         }
+  //       }
+  //     },
+  //     icon: Icon(Icons.cloud_upload),
+  //   );
+  // }
 
   Future<Null> uploadPictureAndInsertData() async {
     String name = nameController.text;

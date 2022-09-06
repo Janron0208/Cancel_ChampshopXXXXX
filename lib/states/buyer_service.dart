@@ -1,3 +1,5 @@
+import 'package:champshop/utility/my_constant.dart';
+import 'package:champshop/widgets/show_signout.dart';
 import 'package:flutter/material.dart';
 
 class BuyerService extends StatefulWidget {
@@ -11,7 +13,13 @@ class _BuyerServiceState extends State<BuyerService> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      appBar: AppBar(
+        title: Text('Buyer'),
+        
+      ),
+      drawer: Drawer(
+        child: ShowSignOut(),
+      ),
     );
   }
 }

@@ -5,6 +5,18 @@ import '../widgets/show_title.dart';
 import 'my_constant.dart';
 
 class MyDialog {
+  Future<Null> showProgressDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => WillPopScope(
+        child: Center(child: CircularProgressIndicator()),
+        onWillPop: () async {
+          return false;
+        },
+      ),
+    );
+  }
+
   Future<Null> normalDialog(
       BuildContext context, String title, String message) async {
     showDialog(
@@ -17,7 +29,8 @@ class MyDialog {
               ShowTitle(title: message, textStyle: MyConstant().error2Style()),
         ),
         children: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('ตกลง'))
+          TextButton(
+              onPressed: () => Navigator.pop(context), child: Text('ตกลง'))
         ],
       ),
     );
