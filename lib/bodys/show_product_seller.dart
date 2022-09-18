@@ -153,11 +153,12 @@ class _ShowProductSellerState extends State<ShowProductSeller> {
                         onPressed: () {
                           print('You Click Edit');
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditProduct(productModel: productModels[index],),
-                            ),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProduct(
+                                  productModel: productModels[index],
+                                ),
+                              )).then((value) => loadValueFromAPI());
                         },
                         icon: Icon(
                           Icons.edit_outlined,

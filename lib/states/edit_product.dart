@@ -285,6 +285,9 @@ class _EditProductState extends State<EditProduct> {
       print('## statusImage = $statusImage');
       print('### id = $id, name = $name, price = $price, detail = $detail');
       print('## Images = $images');
+
+      String apiEditProduct = '${MyConstant.domain}/champshop/editProductWhereId.php?isAdd=true&id=$id&name=$name&price=$price&detail=$detail&images=$images';
+      await Dio().get(apiEditProduct).then((value) => Navigator.pop(context));
     }
   }
 }
