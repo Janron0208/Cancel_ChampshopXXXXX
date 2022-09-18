@@ -4,7 +4,7 @@ class MyConstant {
   //General
   static String appName = 'ChampShop';
   static String domain =
-      'https://b30f-2403-6200-88a0-7110-ec08-bd29-19e6-59fc.ap.ngrok.io';
+      'https://603d-2403-6200-88a0-d9a1-11b0-4f2f-db84-22b6.ap.ngrok.io';
 
   //Route
   static String routeAuthen = '/authen';
@@ -18,6 +18,7 @@ class MyConstant {
   static String image1 = 'images/image1.png';
   static String image2 = 'images/image2.png';
   static String image3 = 'images/image3.png';
+  static String image4 = 'images/image4.png';
   
 
   //color
