@@ -5,6 +5,7 @@ import 'package:champshop/bodys/show_order_seller.dart';
 import 'package:champshop/bodys/show_product_seller.dart';
 import 'package:champshop/models/user_model.dart';
 import 'package:champshop/utility/my_constant.dart';
+import 'package:champshop/widgets/show_progress.dart';
 import 'package:champshop/widgets/show_signout.dart';
 import 'package:champshop/widgets/show_title.dart';
 import 'package:dio/dio.dart';
@@ -19,11 +20,7 @@ class SalerService extends StatefulWidget {
 }
 
 class _SalerServiceState extends State<SalerService> {
-  List<Widget> widgets = [
-    ShowOrderSeller(),
-    ShopManageSeller(),
-    ShowProductSeller()
-  ];
+  List<Widget> widgets = [];
   int indexWidget = 0;
   UserModel? userModel;
 
@@ -46,6 +43,9 @@ class _SalerServiceState extends State<SalerService> {
         setState(() {
           userModel = UserModel.fromMap(item);
           print('### name logined = ${userModel!.name}');
+          widgets.add(ShowOrderSeller());
+          widgets.add(ShopManageSeller(userModel: userModel!));
+          widgets.add(ShowProductSeller());
         });
       }
     });
@@ -57,22 +57,24 @@ class _SalerServiceState extends State<SalerService> {
       appBar: AppBar(
         title: Text('เจ้าของร้าน'),
       ),
-      drawer: Drawer(
-        child: Stack(
-          children: [
-            ShowSignOut(),
-            Column(
-              children: [
-                buildHead(),
-                menuShowOrder(),
-                menuShowManage(),
-                menuShowProduct(),
-              ],
+      drawer: widgets.length == 0
+          ? SizedBox()
+          : Drawer(
+              child: Stack(
+                children: [
+                  ShowSignOut(),
+                  Column(
+                    children: [
+                      buildHead(),
+                      menuShowOrder(),
+                      menuShowManage(),
+                      menuShowProduct(),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-      body: widgets[indexWidget],
+      body: widgets.length == 0 ? ShowProgress() : widgets[indexWidget],
     );
   }
 
@@ -83,7 +85,8 @@ class _SalerServiceState extends State<SalerService> {
             onPressed: () {},
             icon: Icon(Icons.face),
             iconSize: 36,
-            color: Colors.white, tooltip: 'แก้ไขข้อมูล',
+            color: Colors.white,
+            tooltip: 'แก้ไขข้อมูล',
           ),
         ],
         decoration: BoxDecoration(

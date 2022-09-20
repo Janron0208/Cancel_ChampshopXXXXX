@@ -1,4 +1,7 @@
 import 'package:champshop/states/add_product.dart';
+import 'package:champshop/states/edit_product.dart';
+import 'package:champshop/states/edit_profile_saler.dart';
+import 'package:champshop/states/show_cart.dart';
 import 'package:champshop/utility/my_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:champshop/states/authen.dart';
@@ -13,6 +16,8 @@ final Map<String, WidgetBuilder> map = {
   '/buyerService': (BuildContext context) => BuyerService(),
   '/salerService': (BuildContext context) => SalerService(),
   '/addProduct': (BuildContext context) => AddProduct(),
+  '/editProfileSaler': (BuildContext context) => EditProfileSaler(),
+  '/showCart': (BuildContext context) => ShowCart(),
 };
 
 String? initlalRount;
