@@ -1,4 +1,5 @@
 import 'package:champshop/states/add_product.dart';
+import 'package:champshop/states/add_wallet.dart';
 import 'package:champshop/states/edit_product.dart';
 import 'package:champshop/states/edit_profile_saler.dart';
 import 'package:champshop/states/show_cart.dart';
@@ -18,6 +19,7 @@ final Map<String, WidgetBuilder> map = {
   '/addProduct': (BuildContext context) => AddProduct(),
   '/editProfileSaler': (BuildContext context) => EditProfileSaler(),
   '/showCart': (BuildContext context) => ShowCart(),
+  '/addWallet': (BuildContext context) => AddWallet(),
 };
 
 String? initlalRount;
