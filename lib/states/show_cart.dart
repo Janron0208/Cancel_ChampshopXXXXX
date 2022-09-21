@@ -82,27 +82,29 @@ class _ShowCartState extends State<ShowCart> {
       body: load
           ? ShowProgress()
           : sqliteModels.isEmpty
-              ? Center(
-                  child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 16),
-                      width: 200,
-                      child: ShowImage(path: MyConstant.image4),
-                    ),
-                    ShowTitle(
-                        title: 'ไม่มีรายการในตะกร้าสินค้า',
-                        textStyle: MyConstant().h1Style()),
-                  ],
-                ))
+              ? Container(decoration: MyConstant().planBackground(),
+                child: Center(
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 16),
+                        width: 200,
+                        child: ShowImage(path: MyConstant.image4),
+                      ),
+                      ShowTitle(
+                          title: 'ไม่มีรายการในตะกร้าสินค้า',
+                          textStyle: MyConstant().h1Style()),
+                    ],
+                  )),
+              )
               : buildContent(),
     );
   }
 
   Container buildContent() {
     return Container(
-      // decoration: MyConstant().gradintLinearBackground(),
+      decoration: MyConstant().planBackground(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

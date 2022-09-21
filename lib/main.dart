@@ -1,9 +1,11 @@
 import 'package:champshop/states/add_product.dart';
 import 'package:champshop/states/add_wallet.dart';
+import 'package:champshop/states/confirm_add_wallet.dart';
 import 'package:champshop/states/edit_product.dart';
 import 'package:champshop/states/edit_profile_saler.dart';
 import 'package:champshop/states/show_cart.dart';
 import 'package:champshop/utility/my_constant.dart';
+import 'package:champshop/widgets/nav_confirm_add_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:champshop/states/authen.dart';
 import 'package:champshop/states/buyer_service.dart';
@@ -20,6 +22,7 @@ final Map<String, WidgetBuilder> map = {
   '/editProfileSaler': (BuildContext context) => EditProfileSaler(),
   '/showCart': (BuildContext context) => ShowCart(),
   '/addWallet': (BuildContext context) => AddWallet(),
+  '/conFirmAddWallet': (BuildContext context) => ConfirmAddWallet(),
 };
 
 String? initlalRount;

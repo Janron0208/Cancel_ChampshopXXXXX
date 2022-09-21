@@ -57,7 +57,7 @@ class _ShowAllShopBuyerState extends State<ShowAllShopBuyer> {
     return Scaffold(
       body: load
           ? ShowProgress()
-          : Container(
+          : Container(decoration: MyConstant().planBackground(),
               child: GridView.builder(
                 itemCount: userModels.length,
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

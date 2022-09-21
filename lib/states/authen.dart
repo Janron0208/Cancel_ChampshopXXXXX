@@ -33,16 +33,19 @@ class _AuthenState extends State<Authen> {
           behavior: HitTestBehavior.opaque,
           child: Form(
             key: formKey,
-            child: ListView(
-              children: [
-                buildImage(size),
-                buildAppName(),
-                buildTextUser(),
-                buildUser(size),
-                buildPassword(size),
-                buildLogin(size),
-                buildCreateAccount(),
-              ],
+            child: Container(
+              decoration: MyConstant().gradintLinearBackground(),
+              child: ListView(
+                children: [
+                  buildImage(size),
+                  buildAppName(),
+                  buildTextUser(),
+                  buildUser(size),
+                  buildPassword(size),
+                  buildLogin(size),
+                  buildCreateAccount(),
+                ],
+              ),
             ),
           ),
         ),
@@ -110,11 +113,10 @@ class _AuthenState extends State<Authen> {
 
             SharedPreferences preferences =
                 await SharedPreferences.getInstance();
-                preferences.setString('id', model.id);
-                preferences.setString('type', type);
-                preferences.setString('user', model.user);
-                preferences.setString('name', model.name);
-
+            preferences.setString('id', model.id);
+            preferences.setString('type', type);
+            preferences.setString('user', model.user);
+            preferences.setString('name', model.name);
 
             switch (type) {
               case 'buyer':
@@ -158,6 +160,9 @@ class _AuthenState extends State<Authen> {
               }
             },
             decoration: InputDecoration(
+              // contentPadding: EdgeInsets.symmetric(vertical: 4),
+              filled: true,
+              fillColor: Colors.white,
               labelStyle: MyConstant().h3Style(),
               labelText: 'ชื่อบัญชีผู้ใช้',
               suffixIcon: Icon(
@@ -171,7 +176,6 @@ class _AuthenState extends State<Authen> {
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(35),
-                
               ),
               errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.red),
@@ -181,7 +185,6 @@ class _AuthenState extends State<Authen> {
                 borderSide: BorderSide(color: MyConstant.primary4),
                 borderRadius: BorderRadius.circular(35),
               ),
-              
             ),
           ),
         ),
@@ -207,6 +210,8 @@ class _AuthenState extends State<Authen> {
             },
             obscureText: statusRedEye,
             decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {

@@ -1,3 +1,4 @@
+import 'package:champshop/widgets/nav_confirm_add_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:champshop/utility/my_constant.dart';
@@ -22,7 +23,8 @@ class _BankState extends State<Bank> {
           buildKbank(),
         ],
       ),
-      // floatingActionButton: NavConfirmAddWallet(),
+      floatingActionButton: NavConfirmAddWallet() ,
+      
     );
   }
 

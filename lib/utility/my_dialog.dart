@@ -5,6 +5,11 @@ import '../widgets/show_title.dart';
 import 'my_constant.dart';
 
 class MyDialog {
+
+  final Function()? funcAction;
+
+   MyDialog({this.funcAction});
+
   Future<Null> showProgressDialog(BuildContext context) async {
     showDialog(
       context: context,
@@ -35,4 +40,31 @@ class MyDialog {
       ),
     );
   }
+
+   Future<Null> actionDialog(
+    BuildContext context,
+    String title,
+    String message,
+  ) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: ListTile(
+          leading: ShowImage(path: MyConstant.image1),
+          title: ShowTitle(title: title, textStyle: MyConstant().h2Style()),
+          subtitle:
+              ShowTitle(title: message, textStyle: MyConstant().h3Style()),
+        ),actions: [TextButton(
+            onPressed: funcAction,
+            child: Text('ตกลง'),
+          ),
+           TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('ยกเลิก'),
+          ),],
+       
+      ),
+    );
+
+}
 }
