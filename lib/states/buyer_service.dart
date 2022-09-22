@@ -53,21 +53,21 @@ class _BuyerServiceState extends State<BuyerService> {
         });
       }
 
-      // var path =
-      //     '${MyConstant.domain}/champshop/getWalletWhereIdBuyer.php?isAdd=true&idBuyer=${userModel!.id}';
-      // await Dio().get(path).then((value) {
-      //   print('#### value getWalletWhereId ==> $value');
+      var path =
+          '${MyConstant.domain}/champshop/getWalletWhereIdBuyer.php?isAdd=true&idBuyer=${userModel!.id}';
+      await Dio().get(path).then((value) {
+        print('#### value getWalletWhereId ==> $value');
 
-      //   if (value.toString() == 'null') {
-      //     print('#### action Alert add Wallet');
-      //     MyDialog(
-      //       funcAction: () {
-      //         Navigator.pop(context);
-      //         Navigator.pushNamed(context, MyConstant.routeAddWallet);
-      //       },
-      //     ).actionDialog(context, 'No Wallet', 'Please Add Waller');
-      //   }
-      // });
+        if (value.toString() == 'null') {
+          print('#### action Alert add Wallet');
+          MyDialog(
+            funcAction: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, MyConstant.routeAddWallet);
+            },
+          ).actionDialog(context, 'No Wallet', 'Please Add Waller');
+        }
+      });
     });
   }
 
@@ -151,7 +151,7 @@ class _BuyerServiceState extends State<BuyerService> {
         color: MyConstant.primary2,
       ),
       title: ShowTitle(
-        title: 'ตระกร้าสินค้า',
+        title: 'คำสั่งซื้อสินค้า',
         textStyle: MyConstant().h2Style(),
       ),
       onTap: () {

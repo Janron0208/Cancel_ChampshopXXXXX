@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:champshop/states/add_product.dart';
 import 'package:champshop/states/add_wallet.dart';
 import 'package:champshop/states/confirm_add_wallet.dart';
@@ -28,6 +30,9 @@ final Map<String, WidgetBuilder> map = {
 String? initlalRount;
 
 Future<Null> main() async {
+  HttpOverrides.global = MyHttpOverride();
+
+
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? type = preferences.getString('type');
@@ -67,5 +72,16 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color.fromARGB(255, 246, 241, 233),
       ),
     );
+  }
+ 
+}
+
+
+class MyHttpOverride extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    // TODO: implement createHttpClient
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (cert, host, port) => true;
   }
 }

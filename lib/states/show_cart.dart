@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:champshop/models/sqlite_model.dart';
 import 'package:champshop/models/user_model.dart';
+import 'package:champshop/models/wallet_model.dart';
 import 'package:champshop/utility/my_constant.dart';
 import 'package:champshop/utility/sqlite_helper.dart';
 import 'package:champshop/widgets/show_progress.dart';
@@ -9,7 +9,6 @@ import 'package:champshop/widgets/show_title.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../utility/my_dialog.dart';
 import '../widgets/show_image.dart';
 
@@ -82,9 +81,10 @@ class _ShowCartState extends State<ShowCart> {
       body: load
           ? ShowProgress()
           : sqliteModels.isEmpty
-              ? Container(decoration: MyConstant().planBackground(),
-                child: Center(
-                    child: Column(
+              ? Container(
+                  decoration: MyConstant().planBackground(),
+                  child: Center(
+                      child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
@@ -97,7 +97,7 @@ class _ShowCartState extends State<ShowCart> {
                           textStyle: MyConstant().h1Style()),
                     ],
                   )),
-              )
+                )
               : buildContent(),
     );
   }
@@ -158,50 +158,50 @@ class _ShowCartState extends State<ShowCart> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            // MyDialog().showProgressDialog(context);
+            MyDialog().showProgressDialog(context);
 
-            // SharedPreferences preferences =
-            //     await SharedPreferences.getInstance();
-            // String idBuyer = preferences.getString('id')!;
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            String idBuyer = preferences.getString('id')!;
 
-            // var path =
-            //     '${MyConstant.domain}/champshop/getWalletWhereIdBuyer.php?isAdd=true&idBuyer=$idBuyer';
-            // await Dio().get(path).then((value) {
-            //   Navigator.pop(context);
-            //   print('#### value == $value');
-            //   if (value.toString() == 'null') {
-            //     print('#### action Alert add Wallet');
-            //     MyDialog(
-            //       funcAction: () {
-            //         Navigator.pop(context);
+            var path =
+                '${MyConstant.domain}/champshop/getWalletWhereIdBuyer.php?isAdd=true&idBuyer=$idBuyer';
+            await Dio().get(path).then((value) {
+              Navigator.pop(context);
+              print('#### value == $value');
+              if (value.toString() == 'null') {
+                print('#### action Alert add Wallet');
+                MyDialog(
+                  funcAction: () {
+                    Navigator.pop(context);
                     Navigator.pushNamed(context, MyConstant.routeAddWallet);
-            //       },
-            //     ).actionDialog(context, 'No Wallet', 'Please Add Waller');
-            //   } else {
-            //     print('#12feb check Wallet can Payment');
+                  },
+                ).actionDialog(context, 'No Wallet', 'Please Add Waller');
+              } else {
+                print('#12feb check Wallet can Payment');
 
-            //     int approveWallet = 0;
-            //     // for (var item in json.decode(value.data)) {
-            //     //   WalletModel walletModel = WalletModel.fromMap(item);
-            //     //   if (walletModel.status == 'Approve') {
-            //     //     approveWallet =
-            //     //         approveWallet + int.parse(walletModel.money.trim());
-            //     //   }
-            //     // }
-            //     print('#12feb approveWallet ==> $approveWallet');
-            //     // if (approveWallet - total! >= 0) {
-            //     //   print('#12feb Can Order');
-            //     //   MyDialog(funcAction: orderFunc).actionDialog(
-            //     //       context,
-            //     //       'Confirm Order ?',
-            //     //       'Order Total : $total thb \n Please Confirm Order');
-            //     // } else {
-            //     //   print('#12feb Cannot Order');
-            //     //   MyDialog().normalDialog(context, 'Cannot Order ?',
-            //     //       'Approve Money : $approveWallet thb \n Total : $total thb \n จำนวนเงิน ไม่พอจ่าย คุณรอให้ Admin Approve ก่อน หรือ Add Wallet เข้ามา');
-            //     // }
-            //   }
-            // });
+                int approveWallet = 0;
+                for (var item in json.decode(value.data)) {
+                  WalletModel walletModel = WalletModel.fromMap(item);
+                  if (walletModel.status == 'Approve') {
+                    approveWallet =
+                        approveWallet + int.parse(walletModel.money.trim());
+                  }
+                }
+                print('#12feb approveWallet ==> $approveWallet');
+                if (approveWallet - total! >= 0) {
+                  print('#12feb Can Order');
+                  MyDialog(funcAction: orderFunc).actionDialog(
+                      context,
+                      'Confirm Order ?',
+                      'Order Total : $total thb \n Please Confirm Order');
+                } else {
+                  print('#12feb Cannot Order');
+                  MyDialog().normalDialog(context, 'Cannot Order ?',
+                      'Approve Money : $approveWallet thb \n Total : $total thb \n จำนวนเงิน ไม่พอจ่าย คุณรอให้ Admin Approve ก่อน หรือ Add Wallet เข้ามา');
+                }
+              }
+            });
           },
           child: Text('สั่งซื้อ'),
         ),
